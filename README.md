@@ -102,6 +102,7 @@ Lists that people have tested and contributed live in [`examples/`](examples/):
 | TCL 55" 4K Google TV, 2023 (G10) | Google TV 12 |
 | SANYO ATV R2 | Android TV 9 |
 | OnePlus TV (D00) | Google TV 14 |
+| FlipkartTV (Skyworth SW4H) | Android TV 10 |
 
 Your TV not here? The prompt works regardless, it discovers the bloat itself. If you add your
 list afterwards, the next person with your model skips that step. See
@@ -214,6 +215,11 @@ Things that bit us or contributors, so they don't bite you.
   Home before `screencap`.
 - **Disable the stock launcher only after the new one is installed**, or the Home button lands on
   a factory test app.
+- **White screen after Home, seen on a Skyworth-built FlipkartTV**: the Google setup wizard's
+  `RecoveryActivity` claims Home with priority 1, and Android always prefers it over a sideloaded
+  launcher (capped at 0), whatever `set-home-activity` says. The install script detects this and
+  puts the stock launcher back. Disable `com.google.android.tungsten.setupwraith` (updates still
+  come from Play Services; check under Settings → System update) and run the script again.
 - **No on-screen keyboard** after switching launchers, seen on Xiaomi: the default input method
   pointed at a Baidu keyboard that isn't installed. Fix:
   `tools/tv.py 'ime set com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME'`

@@ -1,0 +1,51 @@
+# FlipkartTV (Skyworth, ro.product.device SW4H, MediaTek), Android TV 10, firmware QTG3.200617.002
+# Skyworth-built set sold by Flipkart; vendor packages are com.smartdevice.* / com.tianci.* / com.mediatek.*.
+#
+# Apply:   TV_HOST=<tv ip> tools/disable.sh examples/flipkarttv-sw4h/debloat.txt
+# Undo:    TV_HOST=<tv ip> tools/restore.sh examples/flipkarttv-sw4h/debloat.txt
+# Everything is DISABLED, not uninstalled. Comment out any line you want to keep.
+#
+# Live TV / tuner / input menu: com.smartdevice.livetv (keep). Stock launcher: com.google.android.tvlauncher.
+# Factory-disabled out of the box (left as is): com.sky.market, com.qjy.browser,
+# com.smartdevice.tvworkwithalexa, com.smartdevice.recommendation.
+# Firmware updates come through Play Services (Settings > System update opens
+# com.google.android.gms/.update.SystemUpdatePanoActivity), so they keep working with this list.
+# Kept on purpose: com.smartdevice.firewall (boot-time network/privacy service, purpose unclear),
+# com.smartdevice.factory, com.mediatek.* input/hotkey/Netflix-button services.
+# Kept for USB drives, files, photos and video: com.tianci.localmedia (Skyworth media player),
+# com.android.externalstorage, com.android.providers.media, com.android.providers.downloads.
+
+# Google setup wizard. Its RecoveryActivity is a HOME handler with priority 1, which beats any
+# sideloaded launcher (capped at 0): with the stock launcher disabled the TV loops on a white screen.
+# Shell can't disable the single component on Android 10, so the package goes. Its
+# SystemUpdateService only reports status; updates themselves come from Play Services.
+com.google.android.tungsten.setupwraith
+
+# Skyworth / Alphonso telemetry
+com.smartdevice.acr.recommendation     # Alphonso ACR: fingerprints what is on screen, HDMI included
+
+# Google telemetry
+com.google.android.feedback
+com.google.android.tv.bugreportsender
+
+# Content rows, partner rows and auto-installs
+com.google.android.tvrecommendations   # sponsored rows on the stock home screen
+com.google.android.leanbacklauncher.partnercustomizer
+com.smartdevice.leanbacklauncher.customizer
+android.autoinstalls.config.SW         # Play Auto Install: pushes partner apps
+
+# Retail demo / promos
+com.smartdevice.epopplayer             # showroom promo player, triggered on screen on
+fusion.android.tv.demo                 # retail display mode
+
+# Preloaded apps nobody asked for
+com.Smartdevice.emanual
+com.google.android.music               # Play Music, discontinued
+com.google.android.videos              # Google TV / Play Movies
+com.google.android.play.games
+com.google.android.youtube.tvmusic
+com.google.android.backdrop            # Google ambient screensaver; the launcher ships a Clock one
+
+# Off by choice; re-enable if you use them
+# com.google.android.katniss           # Google Assistant / voice (kept)
+# com.google.android.apps.mediashell   # Chromecast built-in (kept)

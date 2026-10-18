@@ -41,6 +41,15 @@ if ("$out" -match 'Error') { throw 'could not set the new launcher as home; the 
 @(
     'pm grant com.gathin.tvhome android.permission.ACCESS_FINE_LOCATION 2>/dev/null; echo location-granted',
     'cmd package set-home-activity --user 0 com.gathin.tvhome',
-    "pm disable-user --user 0 $StockLauncher"
+    "pm disable-user --user 0 $StockLauncher",
+    'cmd package set-home-activity --user 0 com.gathin.tvhome'
 ) | & $py -I ..\tools\tv.py --batch
+# Disabling the stock launcher clears the home preference, hence the second set-home above. A system HOME
+# handler with intent-filter priority > 0 (e.g. Google TV's setupwraith RecoveryActivity) still beats any
+# sideloaded launcher, whose priority is capped at 0; the TV then loops on a white screen.
+$homeNow = (& $py -I ..\tools\tv.py 'cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME' | Select-Object -Last 1)
+if ("$homeNow" -notlike 'com.gathin.tvhome/*') {
+    & $py -I ..\tools\tv.py "pm enable $StockLauncher" | Out-Null
+    throw "Home still resolves to $homeNow, which outranks the launcher. Stock launcher re-enabled; disable that package (see README, Troubleshooting) and run this script again."
+}
 Write-Host 'Installed. Press Home on the remote to see it.'
