@@ -74,7 +74,7 @@ A home screen that is yours again:
 - **A top shelf** showing the focused app's name in large type, with an ambient glow in a colour
   taken from the app's own artwork.
 - **The rest of your apps in a grid** that slides up when you press Down.
-- **One floating glass highlight** that springs from tile to tile instead of each tile drawing its
+- **One floating glass highlight** that moves straight from tile to tile instead of each tile drawing its
   own border. The focused tile lifts slightly and shows its name.
 - **Three frosted buttons**: Inputs (a dropdown of HDMI ports, AV and Live TV), Wi-Fi (showing the
   network you're on) and Settings.
