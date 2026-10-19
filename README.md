@@ -10,7 +10,10 @@ and a one-line restore if you change your mind.
 
 It started as an afternoon fixing my parents' Mi TV, which showed them an advert before they
 could reach Netflix. The whole thing was done with Claude Code talking to the real TV, and the
-prompt that did it is in this repo so you can do the same with yours.
+prompt that did it is in this repo so you can do the same with yours. The replies to the tweet
+below are where most of the TV lists in this repo came from.
+
+<a href="https://x.com/gathint/status/2111379569030939102"><img src="docs/tweet.png" alt="The tweet: Vibe coded my parents' TV this afternoon. Before and after screenshots." width="560"></a>
 
 ---
 
@@ -99,10 +102,14 @@ Lists that people have tested and contributed live in [`examples/`](examples/):
 |---|---|
 | Xiaomi Mi TV 4A (MiTV-MOOQ1) | Android TV 10 |
 | Xiaomi MiTV-AXSO0 | Android TV 9 |
+| Xiaomi Mi Box S (MIBOX4), streaming box | Android TV 9 |
 | TCL 55" 4K Google TV, 2023 (G10) | Google TV 12 |
 | SANYO ATV R2 | Android TV 9 |
 | OnePlus TV (D00) | Google TV 14 |
 | FlipkartTV (Skyworth SW4H) | Android TV 10 |
+| Sony BRAVIA XBR-65X900E (2017) | Android TV 9 |
+| NVIDIA SHIELD TV Pro 2019 (P2897) | Android TV 11 |
+| Xiaomi MiTV-MOOR2 (venom) | Google TV 11 |
 
 Your TV not here? The prompt works regardless, it discovers the bloat itself. If you add your
 list afterwards, the next person with your model skips that step. See
@@ -201,6 +208,9 @@ Things that bit us or contributors, so they don't bite you.
   `tools/tv.py` avoids the binary entirely.
 - **No "wireless debugging" toggle** on some TVs, Xiaomi among them. USB debugging alone opens
   network ADB on port 5555.
+- **USB devices go dead while USB debugging is on**, seen on the Xiaomi Mi Box S: its firmware
+  switches the USB port to ADB device mode, which cuts the power to a USB speaker or drive. Switch
+  USB debugging off when you're done; the launcher doesn't need it.
 - **Windows PowerShell 5.1 adds a byte-order mark** to text piped into a program, which turned the
   first batch command into gibberish. `tv.py` now strips it, and the `.ps1` scripts pipe clean UTF-8.
 - **Git Bash rewrites paths** like `/data/local/tmp` into Windows paths. The scripts set
@@ -215,11 +225,18 @@ Things that bit us or contributors, so they don't bite you.
   Home before `screencap`.
 - **Disable the stock launcher only after the new one is installed**, or the Home button lands on
   a factory test app.
-- **White screen after Home, seen on a Skyworth-built FlipkartTV**: the Google setup wizard's
-  `RecoveryActivity` claims Home with priority 1, and Android always prefers it over a sideloaded
-  launcher (capped at 0), whatever `set-home-activity` says. The install script detects this and
-  puts the stock launcher back. Disable `com.google.android.tungsten.setupwraith` (updates still
-  come from Play Services; check under Settings → System update) and run the script again.
+- **The new launcher still doesn't own Home** after the stock one is disabled, seen on Google TV
+  (Xiaomi MiTV-MOOR2) and on a Skyworth-built FlipkartTV, where it shows as a white screen after
+  Home. The install script detects this and puts the stock launcher back. Another system app
+  answers HOME: `com.google.android.tungsten.setupwraith`, with `.MainActivity` at intent-filter
+  priority 4 and `.RecoveryActivity` at priority 1. You
+  cannot outrank it, and the obvious workarounds don't help: Android ignores `android:priority` on
+  HOME filters for apps that aren't on the system image, `cmd package set-home-activity` prints
+  `Success` without changing anything (not even after a reboot), and `pm disable-user` on one of
+  setupwraith's components is refused with a SecurityException. Disabling the whole
+  `com.google.android.tungsten.setupwraith` package is what frees the slot. It is the first-run
+  setup wizard, so everyday use is unaffected, but re-enable it before a factory reset - list it in
+  your `debloat.txt` and `tools/restore.sh` does that for you.
 - **No on-screen keyboard** after switching launchers, seen on Xiaomi: the default input method
   pointed at a Baidu keyboard that isn't installed. Fix:
   `tools/tv.py 'ime set com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME'`
