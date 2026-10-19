@@ -2,6 +2,8 @@
 # firmware PI.3933 (built 2021-09-28), security patch 2021-07-05, 2 GB RAM, 1920x1080. Indian unit:
 # PatchWall arrived through Xiaomi's update service.
 # Fingerprint: Xiaomi/oneday/oneday:9/PI/3933:user/release-keys
+# Tested on two units with the same firmware. The second kept voice, casting, Mi video player, the phone
+# remote, firmware updates, TalkBack, print spooler and the Ambient screensaver; see README.md.
 #
 # Apply:   TV_HOST=<box ip> tools/disable.sh examples/xiaomi-mi-box-s/debloat.txt
 # Undo:    TV_HOST=<box ip> tools/restore.sh examples/xiaomi-mi-box-s/debloat.txt
@@ -55,6 +57,9 @@ com.google.android.tv.remote.service   # Google TV / Android TV Remote phone app
 
 # Preloaded apps
 com.google.android.tv                  # Live Channels
+com.google.android.youtube.tvmusic     # already off on the first unit
+com.google.android.videos              # Play Movies & TV; already off on the first unit
+com.google.android.play.games          # already off on the first unit
 com.google.android.marvin.talkback     # screen reader (was off)
 com.android.printspooler
 
@@ -62,11 +67,8 @@ com.android.printspooler
 #   tools/tv.py 'settings put secure screensaver_components com.gathin.tvhome/.ClockDream'
 com.google.android.backdrop
 
-# Already disabled on this unit before we started; uncomment the ones yours still has enabled
+# Already disabled on the first unit before we started; uncomment the ones yours still has enabled
 # com.amazon.amazonvideo.livingroom    # Prime Video
-# com.google.android.youtube.tvmusic
-# com.google.android.videos            # Play Movies & TV
-# com.google.android.play.games
 # com.android.camera2
 
 # Stock Google TV launcher, replaced by launcher/
