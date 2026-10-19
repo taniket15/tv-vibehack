@@ -191,7 +191,7 @@
         </FrameLayout>
     </LinearLayout>
 
-    <!-- The single floating glass highlight that moves to the focused tile. -->
+    <!-- The single floating glass highlight that springs between tiles. -->
     <com.gathin.tvhome.GlassView
         android:id="@+id/glass"
         android:layout_width="10dp"

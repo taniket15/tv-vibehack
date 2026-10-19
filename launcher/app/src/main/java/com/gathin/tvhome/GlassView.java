@@ -12,7 +12,7 @@ import android.view.View;
 
 /**
  * A translucent glass slab: soft sheen fill, bright top specular, crisp rim and a faint outer glow.
- * One instance floats over the grid and is placed directly on the focused tile.
+ * One instance floats over the grid and is moved with spring animations between tiles.
  */
 public class GlassView extends View {
 
