@@ -1,0 +1,43 @@
+# Xiaomi Mi Box 4 (MIBOX4, ro.product.device oneday, Amlogic), Android TV 12, firmware STTC.230106.001.4560
+# A streaming box, not a TV: no HDMI-in or tuner, so the launcher hides its Inputs pill.
+#
+# Apply:   TV_HOST=<box ip> tools/disable.sh examples/xiaomi-mibox4/debloat.txt
+# Undo:    TV_HOST=<box ip> tools/restore.sh examples/xiaomi-mibox4/debloat.txt
+# Everything is DISABLED, not uninstalled. Comment out any line you want to keep.
+#
+# Stock launcher: com.google.android.tvlauncher.
+# Kept on purpose: mitv.service (TV server / settings service), com.mi.bluetooth (remote RcService),
+# com.xiaomi.android.tvsetup.partnercustomizer (holds the BLE remote pairing screen and the global
+# key receiver), com.xiaomi.gtv.settings, com.xiaomi.tvqs.overseas (quick settings panel),
+# com.droidlogic.* (Amlogic platform), com.mitv.dream and com.google.android.backdrop (screensavers),
+# com.xiaomo.tv.milegal (privacy terms), com.google.android.tv.remote.service (phone remote app).
+
+# Xiaomi / Google telemetry
+com.miui.tv.analytics
+com.xiaomi.statistic
+com.google.android.feedback
+
+# Content rows, PatchWall bits and auto-installs
+com.mitv.tvhome.atv                    # PatchWall home pieces
+com.mitv.tvhome.michannel              # Mi channel rows
+com.mitv.tvhome.mitvplus               # Mi TV+ free ad-supported channels
+com.xm.webcontent                      # Xiaomi web content / promo webview
+com.google.android.tvrecommendations   # sponsored rows on the stock home screen
+android.autoinstalls.config.xioami.mibox3   # Play Auto Install: pushes partner apps (sic, "xioami")
+
+# Background services
+com.mitv.download.service              # Xiaomi background downloader, starts at boot
+
+# Preloaded apps not used
+com.google.android.music               # Play Music, discontinued
+com.google.android.play.games
+com.google.android.youtube.tvmusic
+com.google.android.videos              # Google TV / Play Movies
+com.mitv.videoplayer                   # Mi video player (USB files); re-enable if you play local video
+com.google.android.tv                  # Live Channels; the box has no tuner
+
+# Kept by choice; add them if you don't use them
+# com.google.android.katniss           # Google Assistant / voice
+# com.google.android.apps.mediashell   # Chromecast built-in
+# com.mitv.milinkservice               # Mi cast (MiLink)
+# com.xiaomi.mitv.updateservice        # firmware updates

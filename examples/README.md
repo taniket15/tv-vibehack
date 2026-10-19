@@ -11,6 +11,7 @@ on that firmware, grouped and commented. These are starting points: comment out 
 | `sanyo-atv-r2/` | SANYO ATV R2 (SCBC, Realtek RTD285O) | Android TV 9 | S-Channels, E-SHOW demo, Vewd, TV Booster, SANYO OTA |
 | `oneplus-tv-dubai/` | OnePlus TV (D00, Dubai) | Google TV 14 | HeyTap/OnePlus extras, OnePlus Connect, Smart Home |
 | `flipkarttv-sw4h/` | FlipkartTV (Skyworth SW4H, MediaTek) | Android TV 10 | Alphonso ACR tracker, retail demo, Play Auto Install; setup wizard off so Home works ([notes](flipkarttv-sw4h/README.md)) |
+| `xiaomi-mibox4/` | Xiaomi Mi Box 4 (MIBOX4, Amlogic) | Android TV 12 | Streaming box: PatchWall, Mi analytics, Mi TV+; no Inputs pill ([notes](xiaomi-mibox4/README.md)) |
 
 To add your TV, see [CONTRIBUTING.md](../CONTRIBUTING.md). The quickest way to get a list is to
 run the prompt in [PROMPT.md](../PROMPT.md) and copy the packages your assistant disabled.
