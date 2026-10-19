@@ -1,0 +1,43 @@
+# Xiaomi Mi Box 4 (MIBOX4, ro.product.device oneday, Amlogic), Android TV 9, firmware PI.3933
+# Same hardware as examples/xiaomi-mibox4 but the older Android 9 firmware, with a different set of
+# preloads (Alphonso ad tracking, no com.mi.bluetooth / xiaomi.statistic / Mi TV+).
+# A streaming box, not a TV: no HDMI-in or tuner, so the launcher hides its Inputs pill.
+#
+# Apply:   TV_HOST=<box ip> tools/disable.sh examples/xiaomi-mibox4-android9/debloat.txt
+# Undo:    TV_HOST=<box ip> tools/restore.sh examples/xiaomi-mibox4-android9/debloat.txt
+# Everything is DISABLED, not uninstalled. Comment out any line you want to keep.
+#
+# Stock launcher: com.google.android.tvlauncher.
+# Kept on purpose: mitv.service (TV server / settings service), com.droidlogic.ble (Bluetooth remote),
+# com.xiaomi.android.tvsetup.partnercustomizer (remote pairing screen and global key receiver),
+# com.droidlogic.* (Amlogic platform), com.xiaomi.mitv.res, com.google.android.backdrop and
+# com.android.dreams.basic (screensavers), com.google.android.tv.remote.service (phone remote app).
+
+# Telemetry and ad tracking
+com.miui.tv.analytics
+com.google.android.feedback
+com.google.android.tv.bugreportsender  # uploads bug reports to Google
+tv.alphonso.alphonso_eula              # Alphonso automatic content recognition (ad tracking), background service
+
+# Content rows, PatchWall bits and auto-installs
+com.mitv.tvhome.atv                    # PatchWall home pieces
+com.mitv.tvhome.michannel              # Mi channel rows
+com.xm.webcontent                      # Xiaomi web content / promo webview
+com.google.android.tvrecommendations   # sponsored rows on the stock home screen
+android.autoinstalls.config.xioami.mibox3   # Play Auto Install: pushes partner apps (sic, "xioami")
+
+# Background services
+com.mitv.download.service              # Xiaomi background downloader, starts at boot
+
+# Preloaded apps not used
+com.google.android.play.games
+com.google.android.youtube.tvmusic
+com.google.android.videos              # Google TV / Play Movies
+com.google.android.tv                  # Live Channels; the box has no tuner
+
+# Kept by choice; add them if you don't use them
+# com.mitv.videoplayer                 # Mi video player (USB files)
+# com.google.android.katniss           # Google Assistant / voice
+# com.google.android.apps.mediashell   # Chromecast built-in
+# com.mitv.milinkservice               # Mi cast (MiLink)
+# com.xiaomi.mitv.updateservice        # firmware updates
